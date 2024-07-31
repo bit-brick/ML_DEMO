@@ -12,7 +12,7 @@ class Predict(object):
         tflite_model_path = os.path.join(checkpoint_dir, 'mnist_model_quantized.tflite')  # 使用TFLite模型文件
 
         # 加载TFLite模型
-        self.interpreter = tf.lite.Interpreter(model_path=tflite_model_path)
+        self.interpreter = tf.lite.Interpreter(model_path=tflite_model_path,experimental_delegates=[ tflite.load_delegate("/usr/lib/libvx_delegate.so") ])
         self.interpreter.allocate_tensors()
 
         # 获取输入输出张量的索引

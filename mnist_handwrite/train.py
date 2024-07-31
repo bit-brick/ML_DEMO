@@ -5,11 +5,17 @@ from tensorflow.keras import datasets, layers, models
 class CNN:
     def __init__(self):
         self.model = models.Sequential([
+             # 第1层卷积，卷积核大小为3*3，32个，28*28为待训练图片的大小
             layers.Conv2D(32, (3, 3), activation='relu', input_shape=(28, 28, 1)),
+            # 第二层是最大池化层，使用2x2的池化窗口
             layers.MaxPooling2D((2, 2)),
+            # 第三层是另一个卷积层，使用64个3x3的卷积核
             layers.Conv2D(64, (3, 3), activation='relu'),
+            # 第四层是另一个最大池化层
             layers.MaxPooling2D((2, 2)),
+            # 第五层是另一个卷积层，使用64个3x3的卷积核
             layers.Conv2D(64, (3, 3), activation='relu'),
+            # 第六层是展平层，将特征图展开为一维向量
             layers.Flatten(),
             layers.Dense(64, activation='relu'),
             layers.Dense(10, activation='softmax')
@@ -19,6 +25,7 @@ class CNN:
 class DataSource:
     def __init__(self):
         (train_images, train_labels), (test_images, test_labels) = datasets.mnist.load_data()
+	# 6万张训练图片，1万张测试图片 像素值映射到 0 - 1 之间
         train_images = train_images.reshape((60000, 28, 28, 1)).astype('float32') / 255
         test_images = test_images.reshape((10000, 28, 28, 1)).astype('float32') / 255
 
